@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Re:VIEW Workflow
+    runs-on: ubuntu-latest
+    container: docker://vvakame/review:5.3
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build PDF
+        run: rake pdf
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Artifacts
+          path: book.pdf
